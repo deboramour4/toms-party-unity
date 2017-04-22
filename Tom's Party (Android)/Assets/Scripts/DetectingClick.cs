@@ -21,7 +21,7 @@ public class DetectingClick : MonoBehaviour {
 
 			if(objCollider.OverlapPoint(mousePosition)) {
 				SceneManager.LoadScene (index);
-				Debug.Log ("New Scene");
+				Debug.Log ("Scene"+index);
 			}
 		}
 	}
