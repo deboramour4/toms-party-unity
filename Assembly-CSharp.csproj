@@ -48,7 +48,9 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\ChangeScene.cs" />
      <Compile Include="Assets\Scripts\DetectingClick.cs" />
+     <Compile Include="Assets\Scripts\Mec_Zero.cs" />
      <Compile Include="Assets\Scripts\PlayerAnimation.cs" />
+     <None Include="Assets\Scripts\Mechanics\Mechanics.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

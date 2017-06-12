@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class DetectingClick : MonoBehaviour {
 
 	public int index;
-
 	Collider2D objCollider;
 
 	// Use this for initialization
