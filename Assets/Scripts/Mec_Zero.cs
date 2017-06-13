@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Mec_Zero : MonoBehaviour {
 
-	//adio
+	//audio
 	public AudioSource audioSource;
 
 	//moviment
