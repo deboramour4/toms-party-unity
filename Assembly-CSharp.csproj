@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\DetectingClick.cs" />
      <Compile Include="Assets\Scripts\Mec_Zero.cs" />
      <Compile Include="Assets\Scripts\PlayerAnimation.cs" />
+     <Compile Include="Assets\Scripts\PlayerMove.cs" />
      <Compile Include="Assets\Scripts\PlayingNote.cs" />
      <None Include="Assets\Scripts\Mechanics\Mechanics.txt" />
  <Reference Include="UnityEngine.UI">

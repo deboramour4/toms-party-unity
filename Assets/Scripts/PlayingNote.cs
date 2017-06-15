@@ -3,19 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayingNote : MonoBehaviour {
-
+	
 	public AudioSource note;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
+	//Play the audio source;
 	public void Play(){
 		note.Play();
 	}
