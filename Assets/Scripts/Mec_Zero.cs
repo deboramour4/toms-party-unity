@@ -13,7 +13,8 @@ public class Mec_Zero : MonoBehaviour {
 	private bool isWalking;
 	private bool isSinging;
 	private float time;
-	private float sliceOfTime;
+	private bool getTime;
+	private float count;
 
 
 	//collisor
@@ -28,68 +29,65 @@ public class Mec_Zero : MonoBehaviour {
 		tPlayer = GetComponent<Transform>();
 		isWalking = false;
 		isSinging = false;
+		getTime = true;
 		time = 0;
+		count = 0;
+	}
+
+	void FixedUpdate () {
+		if (isSinging) {
+			animator.CrossFade ("sing", 0f); //change the animation immediately
+		} else if (isWalking) {
+			animator.CrossFade ("walking", 0f);
+			tPlayer.Translate(1f * Time.deltaTime,  0.0f, 0.0f );
+		} else {
+			animator.CrossFade ("idle", 0f);
+		}
 	}
 		
 	void Update () {
 		if(Input.GetMouseButtonDown(0)) {
+
 			Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-			if(objCollider.OverlapPoint(mousePosition)) {
+			if (objCollider.OverlapPoint (mousePosition) && transform.position.x > -3.5 && transform.position.x < 3.5) {
+				//save the time of the click
+				if (getTime) {
+					time = Time.frameCount;
+					getTime = false;
+					Debug.Log (time);
+					Debug.Log (Time.frameCount);
+				}
+
+				//make sing: change animation, play note
 				isSinging = true;
-				sliceOfTime = time;
-				//isWalking = true;
-				Debug.Log(sliceOfTime);
-				Debug.Log(isSinging);
+				audioSource.Play ();
 
-			}
+				//increments the count (max: 5)
+				count++;
+			}			
 		}
 
-		if (isSinging){
-			audioSource.Play();
-			animator.CrossFade ("sing", 0f);
-			isSinging = false;
-		}
-
-		if(isSinging && time > sliceOfTime+80)
+		//make the player walk after a time
+		if (isSinging && !isWalking && Time.frameCount > time + 70 && count<=5) {
+				isSinging = false;
 				isWalking = true;
-
-		if(isWalking){
-			animator.CrossFade ("walking",0f);
-			tPlayer.Translate(1.5f * Time.deltaTime,  0.0f, 0.0f );
-			//Debug.Log(1f * Time.deltaTime);
+				time = Time.frameCount;
 		}
 
-		time++;
-		//Debug.Log(time);
-
-
-
-
-			//Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-			//if(objCollider.OverlapPoint(mousePosition) && transform.position.x>-3.5 && transform.position.x<3.5) {
-				//animator.CrossFade ("sing",0f); //change the animation immediately
-				/*if(transform.position.x <= transform.position.x+1.4f){*/
-					
-					//tPlayer.Translate(1f * Time.deltaTime,  0.0f, 0.0f );
-
-					//animator.CrossFade ("walking",0f);
-				/*}*/
-				//setX (transform.position.x+1.4f);
-				//audioSource.Play();
-				 //animator.CrossFade ("idle", 0.3f);
-			//}
-		
-		
+		//make the player stop walk after a time
+		if (isWalking && Time.frameCount > time + 90 && count<=5) {
+			isWalking = false;
+			getTime = true;
+		}
+			
 	}
 
-	void setX(float n){
-		transform.position = new Vector3(n, transform.position.y, transform.position.z);
+	void restart(){
+		isWalking = false;
+		isSinging = false;
+		getTime = true;
+		time = 0;
+		count = 0;
 	}
-
-	void setY(float n){
-		transform.position = new Vector3 (transform.position.x, n, transform.position.z);
-	}
-		
 }

@@ -12,6 +12,8 @@ public class PlayerStates : MonoBehaviour {
 	private bool isWalking;
 	private bool isSinging;
 	private float destination;
+	//private PlayAutomatically managerScript;
+	public bool isPlayable2;
 
 	Collider2D objCollider;
 
@@ -19,12 +21,13 @@ public class PlayerStates : MonoBehaviour {
 	void Start () {
 		tPlayer = GetComponent<Transform>();
 		animPlayer = GetComponent<Animator>();
-		objCollider = GetComponent<Collider2D> ();
+		objCollider = GetComponent<Collider2D>();
+
+		isPlayable2 = false;
 		isWalking = false;
 		isSinging = false;
 	}
-
-	// Update is called once per frame
+		
 	void FixedUpdate () {
 		Move(0.0f);
 		Sing ();
@@ -34,22 +37,18 @@ public class PlayerStates : MonoBehaviour {
 	}
 
 	void Move(float destination){
-		//if(Input.GetMouseButtonDown(0)){
-		//	isWalking = true;
-		//}
 
 		if(transform.position.x<destination){
 			tPlayer.Translate(speed * Time.deltaTime , 0.0f, 0.0f);
 			isWalking = true;
 		}else{
-			destination += 3.0f;
+			isPlayable2 = true;
 			isWalking = false;
+
 		}
 
-		//animPlayer.SetBool ("isWalking",isWalking);
-
-		Debug.Log(isWalking);
-		Debug.Log(destination);
+		//Debug.Log(isWalking);
+		//Debug.Log(destination);
 	}
 
 	void Sing(){
@@ -58,14 +57,19 @@ public class PlayerStates : MonoBehaviour {
 
 			if(objCollider.OverlapPoint(mousePosition)) {
 				isSinging = true;
-				//isWalking = true;
-				Debug.Log(isSinging);
+				//Debug.Log(isSinging);
 			}
 		}
 
 		if (isSinging){
-			note.Play();
-			isSinging = false;
+			StartCoroutine("SingDelay");
 		}	
 	}
+
+	IEnumerator SingDelay(){
+		yield return new WaitForSeconds (0.5f);
+		note.Play();
+		isSinging = false;
+	}
+
 }
