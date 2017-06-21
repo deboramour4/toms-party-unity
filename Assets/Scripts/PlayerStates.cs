@@ -8,9 +8,10 @@ public class PlayerStates : MonoBehaviour {
 	public AudioSource note;
 
 	private Transform tPlayer;
-	private Animator animPlayer;
+	private Animator animator;
 	private bool isWalking;
 	private bool isSinging;
+	private bool isHappy;
 	private float destination;
 	//private PlayAutomatically managerScript;
 	public bool isPlayable2;
@@ -20,11 +21,12 @@ public class PlayerStates : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		tPlayer = GetComponent<Transform>();
-		animPlayer = GetComponent<Animator>();
+		animator = GetComponent<Animator>();
 		objCollider = GetComponent<Collider2D>();
 
 		isPlayable2 = false;
 		isWalking = false;
+		isHappy = false;
 		isSinging = false;
 	}
 		
@@ -32,23 +34,26 @@ public class PlayerStates : MonoBehaviour {
 		Move(0.0f);
 		Sing ();
 
-		animPlayer.SetBool ("isWalking",isWalking);
-		animPlayer.SetBool ("isSinging",note.isPlaying);
+		if (note.isPlaying) {
+			animator.CrossFade ("sing", 0f); //change the animation immediately
+		} else if (isWalking) {
+			animator.CrossFade ("walking", 0f);
+			tPlayer.Translate(1f * Time.deltaTime,  0.0f, 0.0f );
+		} else if (isHappy) {
+			animator.CrossFade ("happy", 0f);
+		} else {
+			animator.CrossFade ("idle", 0f);
+		}
 	}
 
 	void Move(float destination){
-
 		if(transform.position.x<destination){
 			tPlayer.Translate(speed * Time.deltaTime , 0.0f, 0.0f);
 			isWalking = true;
 		}else{
 			isPlayable2 = true;
 			isWalking = false;
-
 		}
-
-		//Debug.Log(isWalking);
-		//Debug.Log(destination);
 	}
 
 	void Sing(){
@@ -57,10 +62,8 @@ public class PlayerStates : MonoBehaviour {
 
 			if(objCollider.OverlapPoint(mousePosition)) {
 				isSinging = true;
-				//Debug.Log(isSinging);
 			}
 		}
-
 		if (isSinging){
 			StartCoroutine("SingDelay");
 		}	

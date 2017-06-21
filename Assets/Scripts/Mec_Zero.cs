@@ -16,7 +16,6 @@ public class Mec_Zero : MonoBehaviour {
 	private bool getTime;
 	private float count;
 
-
 	//collisor
 	Collider2D objCollider;
 
@@ -47,10 +46,9 @@ public class Mec_Zero : MonoBehaviour {
 		
 	void Update () {
 		if(Input.GetMouseButtonDown(0)) {
-
 			Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-			if (objCollider.OverlapPoint (mousePosition) && transform.position.x > -3.5 && transform.position.x < 3.5) {
+			if (objCollider.OverlapPoint (mousePosition) && transform.position.x > -3.5 && transform.position.x < 3.5 && !isSinging && !isWalking) {
 				//save the time of the click
 				if (getTime) {
 					time = Time.frameCount;

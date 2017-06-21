@@ -5,13 +5,9 @@ using UnityEngine;
 public class ManagerScript : MonoBehaviour {
 
 	public GameObject objPlayer; 
-	public GameObject[] bugles = new GameObject[3];
-	public GameObject[] notes = new GameObject[3];
+	public GameObject[] objBugles = new GameObject[3];
+	public PlayingNote[] bugles = new PlayingNote[3];
 	public AudioClip[] sounds = new AudioClip[3];
-
-	private PlayingNote b1Script;
-	private PlayingNote b2Script;
-	private PlayingNote b3Script;
 
 	private bool isPlayable;
 	private bool valido;
@@ -22,12 +18,13 @@ public class ManagerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		for (int i = 0; i < 3; i++) {
+			bugles [i] = objBugles[i].GetComponent<PlayingNote>();
+		}
+
 		//isPlayable = objPlayer.GetComponent<PlayerStates>().isPlayable2;
 		valido = false;
 
-		b1Script = bugles[0].GetComponent<PlayingNote>();
-		b2Script = bugles[1].GetComponent<PlayingNote>();
-		b3Script = bugles[2].GetComponent<PlayingNote>();
 		//accessing the bugle's scripts
 		SoundsOrder ();
 		StartCoroutine ("Waiting");
@@ -35,15 +32,15 @@ public class ManagerScript : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		//Debug.Log ("variavel = "+isPlayable);
 		if(Input.GetMouseButtonDown(0)){
 			Debug.Log (buglesID[0]+", "+buglesID[1]+", "+buglesID[2]);
 		}
+			
 	}
 
 	//Wainting to start the sounds
 	IEnumerator Waiting(){
-		yield return new WaitForSeconds (3.5f);
+		yield return new WaitForSeconds (2.5f);
 		StartCoroutine ("Round");
 	}
 
@@ -51,11 +48,11 @@ public class ManagerScript : MonoBehaviour {
 	//Playing the three sounds
 	IEnumerator Round(){
 		yield return new WaitForSeconds (1f);
-		b1Script.Play ();
+		bugles[0].Play ();
 		yield return new WaitForSeconds (2f);
-		b2Script.Play ();
+		bugles[1].Play ();
 		yield return new WaitForSeconds (2f);
-		b3Script.Play ();
+		bugles[2].Play ();
 
 	}
 
@@ -73,19 +70,23 @@ public class ManagerScript : MonoBehaviour {
 
 	void SoundsOrder(){
 		RandomOrder(buglesID);
+		Debug.Log (buglesID[0]+", "+buglesID[1]+", "+buglesID[2]);
 		for(int i = 0; i<buglesID.Length; i++){
 			switch(buglesID[i]){
 			case 0:
-				notes [i].GetComponent<AudioSource> ().clip = sounds [0];
-				bugles [i].GetComponent<PlayingNote> ().id = 0;
+				bugles [i].setId(0);
+				bugles [i].setNote(sounds [0]);
+				Debug.Log ("1: "+bugles [i].getId());
 				break;
 			case 1:
-				notes [i].GetComponent<AudioSource>().clip = sounds[1];
-				bugles [i].GetComponent<PlayingNote> ().id = 1;
+				bugles [i].setId(1);
+				bugles [i].setNote(sounds [1]);
+				Debug.Log ("2: "+bugles [i].getId());
 				break;
 			case 2:
-				notes [i].GetComponent<AudioSource>().clip = sounds[2];
-				bugles [i].GetComponent<PlayingNote> ().id = 2;
+				bugles [i].setId(2);
+				bugles [i].setNote(sounds [2]);
+				Debug.Log ("3: "+bugles [i].getId());
 				break;
 			}
 		}
