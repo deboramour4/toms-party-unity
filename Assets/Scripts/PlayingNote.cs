@@ -31,10 +31,13 @@ public class PlayingNote : MonoBehaviour {
 	public void setNote(AudioClip clip){
 		this.note.clip = clip;
 	}
+
 	public void setId(int id){
 		this.id = id;
 	}
+
 	public int getId(){
 		return this.id;
 	}
+
 }

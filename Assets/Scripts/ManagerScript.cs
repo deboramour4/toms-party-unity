@@ -6,7 +6,7 @@ public class ManagerScript : MonoBehaviour {
 
 	public GameObject objPlayer; 
 	public GameObject[] objBugles = new GameObject[3];
-	public PlayingNote[] bugles = new PlayingNote[3];
+	private PlayingNote[] bugles = new PlayingNote[3];
 	public AudioClip[] sounds = new AudioClip[3];
 
 	private bool isPlayable;
@@ -20,6 +20,7 @@ public class ManagerScript : MonoBehaviour {
 	void Start () {
 		for (int i = 0; i < 3; i++) {
 			bugles [i] = objBugles[i].GetComponent<PlayingNote>();
+			Debug.Log ("BUGLESSSSSSSSSSSSS"+bugles[i]);
 		}
 
 		//isPlayable = objPlayer.GetComponent<PlayerStates>().isPlayable2;
@@ -72,22 +73,23 @@ public class ManagerScript : MonoBehaviour {
 		RandomOrder(buglesID);
 		Debug.Log (buglesID[0]+", "+buglesID[1]+", "+buglesID[2]);
 		for(int i = 0; i<buglesID.Length; i++){
+			Debug.Log ("FOR");
 			switch(buglesID[i]){
-			case 0:
-				bugles [i].setId(0);
-				bugles [i].setNote(sounds [0]);
-				Debug.Log ("1: "+bugles [i].getId());
-				break;
-			case 1:
-				bugles [i].setId(1);
-				bugles [i].setNote(sounds [1]);
-				Debug.Log ("2: "+bugles [i].getId());
-				break;
-			case 2:
-				bugles [i].setId(2);
-				bugles [i].setNote(sounds [2]);
-				Debug.Log ("3: "+bugles [i].getId());
-				break;
+				case 0:					
+					bugles [i].setId(0);					
+					bugles [i].setNote(sounds [0]);
+					Debug.Log ("Case 0 (DO): "+bugles [i].getId());
+					break;
+				case 1:				
+					bugles [i].setId(1);					
+					bugles [i].setNote(sounds [1]);
+					Debug.Log ("Case 1(NÃO): "+bugles [i].getId());
+					break;
+				case 2:				
+					bugles [i].setId(2);					
+					bugles [i].setNote(sounds [2]);
+					Debug.Log ("Case 2(NÃO): "+bugles [i].getId());
+					break;
 			}
 		}
 	}
