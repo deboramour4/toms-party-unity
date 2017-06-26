@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class Mec_Zero : MonoBehaviour {
 
 	//audio
-	public AudioSource audioSource;
+	private AudioSource audioSource;
 
 	//moviment
 	private Transform tPlayer;
@@ -23,9 +23,10 @@ public class Mec_Zero : MonoBehaviour {
 	Animator animator;
 
 	void Start () {
-		objCollider = GetComponent<PolygonCollider2D> ();
+		objCollider = GetComponent<BoxCollider2D> ();
 		animator = GetComponent<Animator>();
 		tPlayer = GetComponent<Transform>();
+		audioSource = GetComponent<AudioSource> ();
 		isWalking = false;
 		isSinging = false;
 		getTime = true;
@@ -38,7 +39,7 @@ public class Mec_Zero : MonoBehaviour {
 			animator.CrossFade ("sing", 0f); //change the animation immediately
 		} else if (isWalking) {
 			animator.CrossFade ("walking", 0f);
-			tPlayer.Translate(1f * Time.deltaTime,  0.0f, 0.0f );
+			tPlayer.Translate(2f * Time.deltaTime,  0.0f, 0.0f );
 		} else {
 			animator.CrossFade ("idle", 0f);
 		}
@@ -46,37 +47,40 @@ public class Mec_Zero : MonoBehaviour {
 		
 	void Update () {
 		if(Input.GetMouseButtonDown(0)) {
+
 			Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-			if (objCollider.OverlapPoint (mousePosition) && transform.position.x > -3.5 && transform.position.x < 3.5 && !isSinging && !isWalking) {
+			if (objCollider.OverlapPoint (mousePosition) && !isSinging && !isWalking && count < 5) {
 				//save the time of the click
 				if (getTime) {
 					time = Time.frameCount;
 					getTime = false;
-					Debug.Log (time);
-					Debug.Log (Time.frameCount);
 				}
 
 				//make sing: change animation, play note
 				isSinging = true;
 				audioSource.Play ();
 
-				//increments the count (max: 5)
-				count++;
-			}			
+			} else if (count > 5) {
+				isSinging = true;
+				audioSource.Play ();
+			}
 		}
 
 		//make the player walk after a time
-		if (isSinging && !isWalking && Time.frameCount > time + 70 && count<=5) {
+		if (isSinging && !isWalking && Time.frameCount > time + 50 && count<5) {
 				isSinging = false;
 				isWalking = true;
 				time = Time.frameCount;
 		}
 
 		//make the player stop walk after a time
-		if (isWalking && Time.frameCount > time + 90 && count<=5) {
+		if (isWalking && Time.frameCount > time + 40 && count<5) {
 			isWalking = false;
 			getTime = true;
+
+			//increments the count (max: 5)
+			count++;
 		}
 			
 	}
