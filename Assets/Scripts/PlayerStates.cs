@@ -12,6 +12,7 @@ public class PlayerStates : MonoBehaviour {
 	private bool isWalking;
 	private bool isSinging;
 	private bool isHappy;
+	private bool isSad;
 	private float destination;
 	//private PlayAutomatically managerScript;
 	public bool isPlayable2;
@@ -27,6 +28,7 @@ public class PlayerStates : MonoBehaviour {
 		isPlayable2 = false;
 		isWalking = false;
 		isHappy = false;
+		isSad = false;
 		isSinging = false;
 	}
 		
@@ -40,7 +42,9 @@ public class PlayerStates : MonoBehaviour {
 			animator.CrossFade ("walking", 0f);
 			tPlayer.Translate(1f * Time.deltaTime,  0.0f, 0.0f );
 		} else if (isHappy) {
-			animator.CrossFade ("happy", 0f);
+			StartCoroutine("HappyDelay");
+		} else if (isSad) {
+			StartCoroutine("SadDelay");
 		} else {
 			animator.CrossFade ("idle", 0f);
 		}
@@ -60,7 +64,7 @@ public class PlayerStates : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0)) {
 			Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-			if(objCollider.OverlapPoint(mousePosition)) {
+			if(objCollider.OverlapPoint(mousePosition) && !isWalking) {
 				isSinging = true;
 			}
 		}
@@ -73,6 +77,35 @@ public class PlayerStates : MonoBehaviour {
 		yield return new WaitForSeconds (0.5f);
 		note.Play();
 		isSinging = false;
+	}
+
+	IEnumerator HappyDelay(){
+		animator.CrossFade ("happy", 0f);
+		yield return new WaitForSeconds (1.4f);
+		isHappy = false;
+	}
+
+	IEnumerator SadDelay(){
+		Debug.Log ("to triste");
+		animator.CrossFade ("sad", 0f);
+		yield return new WaitForSeconds (1.4f);
+		isSad = false;
+	}
+
+	public bool getIsHappy(){
+		return this.isHappy;
+	}
+
+	public void setIsHappy(bool isHappy){
+		this.isHappy = isHappy;
+	}
+
+	public bool getIsSad(){
+		return this.isSad;
+	}
+
+	public void setIsSad(bool isSad){
+		this.isSad = isSad;
 	}
 
 }

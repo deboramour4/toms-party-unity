@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayingNote : MonoBehaviour {
+
+	public GameObject player;
+
 	
 	private AudioSource note;
 	private int id;
+	private PlayerStates script;
 
 	void Start(){
 		note = GetComponent<AudioSource> ();
+		script = player.GetComponent<PlayerStates> ();
 	}
 
 	public void checkNote(){
@@ -17,8 +22,10 @@ public class PlayingNote : MonoBehaviour {
 
 		//check if is the correct note
 		if (id == 0) {
+			script.setIsHappy (true); 
 			Debug.Log ("ACERTÔ MISERAVI");
 		} else {
+			script.setIsSad (true);
 			Debug.Log ("EROOOOOU");
 		}
 	}
