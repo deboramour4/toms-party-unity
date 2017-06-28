@@ -11,6 +11,8 @@ public class PlayingNote : MonoBehaviour {
 	private int id;
 	private PlayerStates script;
 
+	private Animator animator;
+
 	void Start(){
 		note = GetComponent<AudioSource> ();
 		script = player.GetComponent<PlayerStates> ();
@@ -45,6 +47,14 @@ public class PlayingNote : MonoBehaviour {
 
 	public int getId(){
 		return this.id;
+	}
+
+	public void setAnimator(Animator an){
+		this.animator = an;
+	}
+
+	public Animator getAnimator(){
+		return this.animator;
 	}
 
 }

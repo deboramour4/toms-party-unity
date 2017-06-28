@@ -59,7 +59,7 @@ public class Mec_Zero : MonoBehaviour {
 
 				//make sing: change animation, play note
 				isSinging = true;
-				audioSource.Play ();
+				//audioSource.Play ();
 
 			} else if (count > 5) {
 				isSinging = true;
