@@ -13,14 +13,15 @@ public class Mec_Two : MonoBehaviour {
 	private AudioSource playerAudioSource;
 	public AudioClip[] sounds = new AudioClip[3];
 
-	//playnotes
+	//flowers
 	private PlayingNote[] flowers = new PlayingNote[3];
-
 	public int[] flowersID = new int[3];
-	private bool valido;
+	Animator[] flowerAnimator = new Animator[3];
 
-	//moviment
+	//player
 	private Transform playerTransform;
+	private Animator playerAnimator;
+	private Collider2D playerCollider;
 	private bool isWalking;
 	private bool isSinging;
 	private float time;
@@ -28,17 +29,11 @@ public class Mec_Two : MonoBehaviour {
 	private float col;
 	private bool up, down;
 
-	//random 
-	//collisor
-	Collider2D playerCollider;
-
-	//animation
-	Animator playerAnimator;
-	Animator[] flowerAnimator = new Animator[3];
-
 	//end
 	private bool win;
 	private float posX;
+
+	private bool valido;
 
 	/*//save the time of the click
 	if (getTime) {
@@ -64,18 +59,16 @@ public class Mec_Two : MonoBehaviour {
 		isSinging = false;
 		getTime = true; // able or disable the possibility to get the current frame(time)
 		time = 0; // the variable that gets the current frame(time)
-		posX = playerTransform.position.x;
-		down = true;
+		posX = playerTransform.position.x; //position x of the player 
+		down = true; //if the player goes up or down
 		up = false;
-		win = false;
+		win = false; //if it's the end
 
-		chooseFlowerNotes ();
-
-		//WHEN THE TUTORIAL ENDS
-		Debug.Log(flowers [0].getAnimator());
-		//Debug.Log(objFlower [1].GetComponent<Animator> ());
 		objFlower [1].SetActive (false);
 		objFlower [2].SetActive (false);
+
+		chooseFlowerNotes ();
+		StartCoroutine ("Round");
 	}
 
 	void FixedUpdate () {
@@ -143,12 +136,6 @@ public class Mec_Two : MonoBehaviour {
 				isWalking = true;
 				time = Time.frameCount;
 		}
-
-		/*//make the player stop walk after a time
-		if (isWalking && Time.frameCount > time + 50 && col<9) {
-			isWalking = false;
-			getTime = true;
-		}*/
 			
 	}
 
@@ -188,11 +175,26 @@ public class Mec_Two : MonoBehaviour {
 
 	void setFlowerNotes(){
 
-		// set audiosource clips notes for flowers
-		for(int i =0; i<3; i++){
-			flowers [i].setId (flowersID [i]);
-			//flowers [i].setNote (sounds [flowersID [i]]);
-			Debug.Log (sounds [flowers[i].getId ()]);
+		for(int i = 0; i<flowersID.Length; i++){
+			//Debug.Log ("FOR");
+			switch(flowersID[i]){
+			case 0:					
+				flowers [i].setId (0);					
+				flowers [i].setNote (sounds [0]);
+				//isCorrect = flowers [i].getCorrect();
+				//Debug.Log ("Case 0 (DO): "+bugles [i].getId());
+				break;
+			case 1:				
+				flowers [i].setId(1);					
+				flowers [i].setNote(sounds [1]);
+				//Debug.Log ("Case 1(NÃO): "+bugles [i].getId());
+				break;
+			case 2:				
+				flowers [i].setId(2);					
+				flowers [i].setNote(sounds [2]);
+				//Debug.Log ("Case 2(NÃO): "+bugles [i].getId());
+				break;
+			}
 		}
 	}
 
@@ -208,4 +210,17 @@ public class Mec_Two : MonoBehaviour {
 		Debug.Log ("GANHOU");
 	}
 
+	//Playing the three sounds
+	IEnumerator Round(){
+		yield return new WaitForSeconds (4f);
+		flowers[0].Play ();
+
+		yield return new WaitForSeconds (2f);
+		objFlower [1].SetActive (true);
+		flowers[1].Play ();
+
+		yield return new WaitForSeconds (2f);
+		objFlower [2].SetActive (true);
+		flowers[2].Play ();
+	}
 }
