@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\PlayerAnimation.cs" />
      <Compile Include="Assets\Scripts\PlayerStates.cs" />
      <Compile Include="Assets\Scripts\PlayingNote.cs" />
+     <Compile Include="Assets\Scripts\PlayingNote2.cs" />
      <None Include="Assets\Scripts\Mechanics\Mechanics.txt" />
      <None Include="Assets\resolutions.txt" />
  <Reference Include="UnityEngine.UI">
