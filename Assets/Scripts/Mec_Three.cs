@@ -6,82 +6,52 @@ using UnityEngine.SceneManagement;
 public class Mec_Three : MonoBehaviour {
 
 	//gameObject
-	public GameObject objPlayer;
-	public GameObject[] objFlower = new GameObject[3];
+	public GameObject objPlayer; //player
+	public GameObject[] objWood = new GameObject[4]; //woods
+	public GameObject progressBar; //progressBar
 
-	//audio
+
+	//audios
+	//player
 	private AudioSource playerAudioSource;
-	public AudioClip[] sounds = new AudioClip[3];
+	public AudioClip[] sounds = new AudioClip[2];
+	//woods
+	private AudioSource[] woodAudioSource = new AudioSource[4];
 
-	//playnotes
-	private PlayingNote[] flowers = new PlayingNote[3];
+	//id  woods
+	int[] woodsOrder = new int[4]; 
 
-	public int[] flowersID = new int[3];
-	private bool valido;
-
-	//moviment
-	private Transform playerTransform;
-	private bool isWalking;
-	private bool isSinging;
-	private float time;
-	private bool getTime;
-	private float col;
-	private bool up, down;
-
-	//random 
 	//collisor
 	Collider2D playerCollider;
 
 	//animation
 	Animator playerAnimator;
-	Animator[] flowerAnimator = new Animator[3];
+	Animator[] woodAnimator = new Animator[4];
+	Animator pBarAnimator;
 
-	//end
-	private bool win;
-	private float posX;
-
-	/*//save the time of the click
-	if (getTime) {
-		time = Time.frameCount;
-		getTime = false;
-	}*/
 
 	void Start () {
 		//Elements of the player
 		playerCollider = objPlayer.GetComponent<BoxCollider2D> ();
 		playerAnimator = objPlayer.GetComponent<Animator>();
-		playerTransform = objPlayer.GetComponent<Transform>();
 		playerAudioSource = objPlayer.GetComponent<AudioSource> ();
 
-		//Elements of the flowers
-		for (int i = 0; i < 3; i++) {
-			flowers [i] = objFlower[i].GetComponent<PlayingNote>();
-			flowers [i].setAnimator (objFlower [i].GetComponent<Animator> ());
+		//Elements of the woods
+		for (int i = 0; i < 4; i++) {
+			woodAudioSource[i] = objWood [i].GetComponent<AudioSource>();
+			woodAnimator[i] = objWood [i].GetComponent<Animator> ();
 		}
-			
-		valido = false;
-		isWalking = false;
-		isSinging = false;
-		getTime = true; // able or disable the possibility to get the current frame(time)
-		time = 0; // the variable that gets the current frame(time)
-		posX = playerTransform.position.x;
-		down = true;
-		up = false;
-		win = false;
 
-		chooseFlowerNotes ();
+		//Elements of the progress bar
+		pBarAnimator = progressBar.GetComponent<Animator>();
 
-		//WHEN THE TUTORIAL ENDS
-		Debug.Log(flowers [0].getAnimator());
-		//Debug.Log(objFlower [1].GetComponent<Animator> ());
-		objFlower [1].SetActive (false);
-		objFlower [2].SetActive (false);
+		chooseWoodsNotes ();
 	}
 
 	void FixedUpdate () {
 		//Debug.Log ("position player= "+playerTransform.position.x+" | posX= "+posX);
 
-		if (isSinging) {
+		/*if (isSinging) {
 			playerAnimator.CrossFade ("sing", 0f); //change the animation immediately
 		} else if (isWalking) {
 			playerAnimator.CrossFade ("walking", 0f);
@@ -103,14 +73,14 @@ public class Mec_Three : MonoBehaviour {
 				
 		} else {
 			playerAnimator.CrossFade ("idle", 0f);
-		}
+		}*/
 
 
 	}
 		
 	void Update () {
 		
-		//Debug.Log ("Walk: "+isWalking);
+		/*//Debug.Log ("Walk: "+isWalking);
 		//Make player sing
 		if(Input.GetMouseButtonDown(0)) {
 
@@ -137,7 +107,7 @@ public class Mec_Three : MonoBehaviour {
 				time = Time.frameCount;
 		}
 
-		/*//make the player stop walk after a time
+		//make the player stop walk after a time
 		if (isWalking && Time.frameCount > time + 50 && col<9) {
 			isWalking = false;
 			getTime = true;
@@ -145,60 +115,27 @@ public class Mec_Three : MonoBehaviour {
 			
 	}
 
-	void clickFlower(int id){
-		if (id == 0) {
-			flowers [0].Play ();
-			col++; // next col
-			isWalking = true;
-			//player.moveAnywhere(posX[a], posY[0], 2);
-		}  
-		if (id == 1) { 
-			flowers [1].Play ();
-			//sTry.playSound(); tente de novo
-		}
-		if (id == 2) {
-			flowers [2].Play ();
-			//sTry.playSound(); tente de novo
-		} else if (col >6) {
-			win = true;
-			congrats();
-		}
 
-	}
-
-	void chooseFlowerNotes() {
-		for (int i = 0; i <3; i++) {
+	void chooseWoodsNotes() {
+		bool valido;
+		for (int i = 0; i < 4; i++) {
 			do {
-				flowersID[i] = Random.Range(0,3);;
+				woodsOrder [i] = Random.Range (0, 4);
+				;
 				valido = true;
 				for (int j = 0; j < i; j++)
-					if (flowersID[i] == flowersID[j])
+					if (woodsOrder [i] == woodsOrder [j])
 						valido = false;
 			} while (valido == false);
-		}
-		setFlowerNotes ();
+		}	
+		Debug.Log("note1="+woodsOrder[0]+"  note2="+woodsOrder[1]+"  note3="+woodsOrder[2]+"  note4="+woodsOrder[3]);
+		setWoodsNotes ();
 	}
-
-	void setFlowerNotes(){
-
-		// set audiosource clips notes for flowers
-		for(int i =0; i<3; i++){
-			flowers [i].setId (flowersID [i]);
-			//flowers [i].setNote (sounds [flowersID [i]]);
-			Debug.Log (sounds [flowers[i].getId ()]);
-		}
+		
+	void setWoodsNotes(){
+		woodAudioSource[woodsOrder[0]].clip = sounds [0];
+		woodAudioSource[woodsOrder[1]].clip = sounds [0];
+		woodAudioSource[woodsOrder[2]].clip = sounds [1];
+		woodAudioSource[woodsOrder[3]].clip = sounds [1];
 	}
-
-	void restart(){
-		isWalking = false;
-		isSinging = false;
-		getTime = true;
-		time = 0;
-		col = 0;
-	}
-
-	void congrats(){
-		Debug.Log ("GANHOU");
-	}
-
 }
