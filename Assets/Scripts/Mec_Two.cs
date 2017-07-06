@@ -64,8 +64,8 @@ public class Mec_Two : MonoBehaviour {
 		up = false;
 		win = false; //if it's the end
 
-		objFlower [1].SetActive (false);
-		objFlower [2].SetActive (false);
+		//objFlower [1].SetActive (false);
+		//objFlower [2].SetActive (false);
 
 		chooseFlowerNotes ();
 		StartCoroutine ("Round");

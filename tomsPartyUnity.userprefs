@@ -1,11 +1,19 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayingNote.cs">
+<<<<<<< HEAD
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Victory.cs">
     <Files>
-      <File FileName="Assets\Scripts\ManagerScript.cs" Line="67" Column="2" />
-      <File FileName="Assets\Scripts\PlayerStates.cs" Line="33" Column="13" />
+      <File FileName="Assets\Scripts\PlayerStates.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayingNote.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Mec_Two.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Victory.cs" Line="13" Column="6" />
+=======
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Mec_Two.cs">
+    <Files>
+      <File FileName="Assets\Scripts\PlayerStates.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\PlayingNote.cs" Line="20" Column="22" />
-      <File FileName="Assets\Scripts\Mec_Two.cs" Line="184" Column="7" NotebookId="1" />
+      <File FileName="Assets\Scripts\Mec_Two.cs" Line="68" Column="37" />
+>>>>>>> 2618cdecb16e7874cdcdde736d056d6319e70b7a
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
