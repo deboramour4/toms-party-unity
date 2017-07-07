@@ -1,6 +1,6 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Mec_Three.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Mec_Two.cs">
     <Files>
       <File FileName="Assets\Scripts\Mec_Three.cs" Line="118" Column="2" />
       <File FileName="Assets\Scripts\Mec_Two.cs" Line="159" Column="4" />
