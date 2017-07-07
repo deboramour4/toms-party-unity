@@ -29,6 +29,11 @@ public class Mec_Three : MonoBehaviour {
 	Animator[] woodAnimator = new Animator[4];
 	Animator pBarAnimator;
 
+	//singing
+	bool isSinging;
+	bool getTime;
+	float time;
+
 
 	void Start () {
 		//Elements of the player
@@ -45,52 +50,27 @@ public class Mec_Three : MonoBehaviour {
 		//Elements of the progress bar
 		pBarAnimator = progressBar.GetComponent<Animator>();
 
+		//animation singing
+		isSinging = false;
 		chooseWoodsNotes ();
 	}
 
 	void FixedUpdate () {
-		//Debug.Log ("position player= "+playerTransform.position.x+" | posX= "+posX);
-
-		/*if (isSinging) {
+		if (isSinging) {
 			playerAnimator.CrossFade ("sing", 0f); //change the animation immediately
-		} else if (isWalking) {
-			playerAnimator.CrossFade ("walking", 0f);
-			//go up
-			if (up && posX > playerTransform.position.x) {
-				playerTransform.Translate (1f* Time.deltaTime, 1.2f * Time.deltaTime, 0.0f);
-			} else if (up) {
-				isWalking = false;
-				getTime = true;
-			}
-
-			//go down
-			if (down && posX > playerTransform.position.x) {
-				playerTransform.Translate (1f* Time.deltaTime, -1.2f * Time.deltaTime, 0.0f);
-			} else if (down) {
-				isWalking = false;
-				getTime = true;
-			}
-				
 		} else {
 			playerAnimator.CrossFade ("idle", 0f);
-		}*/
-
-
+		}
+			
 	}
 		
 	void Update () {
-		
-		/*//Debug.Log ("Walk: "+isWalking);
 		//Make player sing
 		if(Input.GetMouseButtonDown(0)) {
-
 			Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-			if (playerCollider.OverlapPoint (mousePosition) && !isSinging && !isWalking) {
-				//save the time of the click
+			if (playerCollider.OverlapPoint (mousePosition)) {
 				if (getTime) {
 					time = Time.frameCount;
-					posX = playerTransform.position.x+1.7f;
 					getTime = false;
 				}
 
@@ -99,19 +79,12 @@ public class Mec_Three : MonoBehaviour {
 				playerAudioSource.Play ();
 			}
 		}
-
-		//make the player walk after a time
-		if (isSinging && !isWalking && Time.frameCount > time + 70 && col<8) {
-				isSinging = false;
-				isWalking = true;
-				time = Time.frameCount;
-		}
-
-		//make the player stop walk after a time
-		if (isWalking && Time.frameCount > time + 50 && col<9) {
-			isWalking = false;
+						
+		//make the player stop singing after a time
+		if (isSinging && Time.frameCount > time + 170) {
+			isSinging = false;
 			getTime = true;
-		}*/
+		}			
 			
 	}
 
@@ -137,5 +110,11 @@ public class Mec_Three : MonoBehaviour {
 		woodAudioSource[woodsOrder[1]].clip = sounds [0];
 		woodAudioSource[woodsOrder[2]].clip = sounds [1];
 		woodAudioSource[woodsOrder[3]].clip = sounds [1];
+	}
+
+	public void clickWood(int wood){
+		woodAnimator [wood].SetTrigger ("show");
+		Debug.Log(woodAudioSource [wood].clip);
+		woodAudioSource [wood].Play ();
 	}
 }
