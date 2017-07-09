@@ -15,13 +15,16 @@ public class Drop : MonoBehaviour {
 		spriteRe = portraitRe.GetComponent<SpriteRenderer> ();
 	}
 
-	void OnCollisionEnter2D(Collision2D other){
+	void OnTriggerEnter2D(Collider2D other){
 		Debug.Log ("aeeee");
 		if(other.gameObject.tag == "PhotoDo"){
-			
 			portraitDo.SetActive (true);
 			spriteDo.sortingOrder = 1;
 			spriteRe.sortingOrder = 0;
+		} else if(other.gameObject.tag == "PhotoRe"){
+			portraitRe.SetActive (true);
+			spriteDo.sortingOrder = 0;
+			spriteRe.sortingOrder = 1;
 		}
 	}
 

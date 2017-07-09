@@ -40,12 +40,10 @@ public class Drag : MonoBehaviour {
 		posX = Input.mousePosition.x - dist.x;
 		posY = Input.mousePosition.y - dist.y;
 	
-		sprite.sortingOrder = 1;
-		otherSprite.sortingOrder = 0;
-		staticSprite1.sortingOrder = 1;
+		sprite.sortingOrder = 3;
+		otherSprite.sortingOrder = 1;
+		staticSprite1.sortingOrder = 2;
 		staticSprite2.sortingOrder = 0;
-
-		isDragging = true;
 	}
 
 	void OnMouseDrag(){
@@ -53,6 +51,8 @@ public class Drag : MonoBehaviour {
 
 		Vector3 worldPos = Camera.main.ScreenToWorldPoint (mousePos);
 		transform.position = worldPos;
+
+		isDragging = true;
 
 	}
 
@@ -62,12 +62,7 @@ public class Drag : MonoBehaviour {
 		transform.position = temp;
 		isDragging = true;
 	}
-
-	void OnCollisionEnter2D(Collision2D other){
-		Debug.Log ("aeeee");
-	}
-
-
+		
 	bool getIsDragging(){
 		return isDragging;
 	}
