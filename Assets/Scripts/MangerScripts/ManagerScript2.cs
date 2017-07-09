@@ -8,10 +8,10 @@ public class ManagerScript2 : MonoBehaviour {
 
 	public GameObject[] objPhotos = new GameObject[3];
 	private PlayingNote2[] photos = new PlayingNote2[3];
-	public int[] photosID = new int[2];
+	public int[] photosID = new int[3];
 	public AudioClip[] sounds = new AudioClip[2];
 
-	bool isStarting;
+
 	private bool isPlayable;
 	private bool valido;
 	public bool Rounding;
@@ -35,8 +35,8 @@ public class ManagerScript2 : MonoBehaviour {
 		//isCorrect = false;
 
 		//accessing the bugle's scripts
-		isStarting = true;
-		//SoundsOrder ();
+
+		SoundsOrder ();
 		StartCoroutine ("Round");
 
 	}
@@ -58,13 +58,7 @@ public class ManagerScript2 : MonoBehaviour {
 
 	void RandomOrder(int[] b){
 		for (int i = 0; i < b.Length; i++) {
-			do {
-				photosID[i] = Random.Range(0,2);
-				valido = true;
-				for (int j = 0; j < i; j++)
-					if (b[i] == photosID[j])
-						valido = false;
-			} while (valido == false);
+			photosID[i] = Random.Range(0,2);
 		}
 		Debug.Log (photosID[0]+", "+photosID[1]+", "+photosID[2]);
 	}
@@ -72,7 +66,7 @@ public class ManagerScript2 : MonoBehaviour {
 	void SoundsOrder(){
 
 		RandomOrder(photosID);
-
+		Debug.Log (photosID[0] +", "+photosID[1]);
 		for(int i = 0; i<photosID.Length; i++){
 			//Debug.Log ("FOR");
 			switch(photosID[i]){
@@ -80,12 +74,12 @@ public class ManagerScript2 : MonoBehaviour {
 				photos [i].setId (0);					
 				photos [i].setNote (sounds [0]);
 				isCorrect = photos [i].getCorrect();
-				//Debug.Log ("Case 0 (DO): "+photos [i].getId());
+				Debug.Log ("Case 0 (DO): "+photos [i].getId());
 				break;
 			case 1:				
 				photos [i].setId(1);					
 				photos [i].setNote(sounds [1]);
-				//Debug.Log ("Case 1(NÃO): "+photos [i].getId());
+				Debug.Log ("Case 1(NÃO): "+photos [i].getId());
 				break;
 			}
 		}
