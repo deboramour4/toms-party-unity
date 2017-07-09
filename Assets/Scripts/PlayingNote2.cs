@@ -26,11 +26,11 @@ public class PlayingNote2 : MonoBehaviour {
 
 			//check if is the correct note
 			if (id == 0) {
-				script.setIsHappy (true);
+				//script.setIsHappy (true);
 				isCorrect = true;
 				//Debug.Log ("ACERTÔ MsISERAVI");
 			} else {
-				script.setIsSad (true);
+				//script.setIsSad (true);
 				isCorrect = false;
 				Debug.Log ("EROOOOOU");
 			}
@@ -68,5 +68,6 @@ public class PlayingNote2 : MonoBehaviour {
 	public Animator getAnimator(){
 		return this.animator;
 	}
+
 
 }
