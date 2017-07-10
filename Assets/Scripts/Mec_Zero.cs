@@ -5,91 +5,74 @@ using UnityEngine.SceneManagement;
 
 public class Mec_Zero : MonoBehaviour {
 
-	//audio
-	private AudioSource audioSource;
+	//gameObject
+	public GameObject objPlayer; //player
+	public GameObject progressBar; //progressBar
+	public GameObject victory;
 
-	//moviment
-	private Transform tPlayer;
-	private bool isWalking;
-	private bool isSinging;
-	private float time;
-	private bool getTime;
-	private float count;
+
+	//audios
+	//player
+	private AudioSource playerAudioSource;
 
 	//collisor
-	Collider2D objCollider;
+	Collider2D playerCollider;
 
 	//animation
-	Animator animator;
+	Animator playerAnimator;
+	Animator pBarAnimator;
+	public float secToSing;
+
+	//mechanic
+	public static int stars;
 
 	void Start () {
-		objCollider = GetComponent<BoxCollider2D> ();
-		animator = GetComponent<Animator>();
-		tPlayer = GetComponent<Transform>();
-		audioSource = GetComponent<AudioSource> ();
-		isWalking = false;
-		isSinging = false;
-		getTime = true;
-		time = 0;
-		count = 0;
+		//Elements of the player
+		playerCollider = objPlayer.GetComponent<BoxCollider2D> ();
+		playerAnimator = objPlayer.GetComponent<Animator>();
+		playerAudioSource = objPlayer.GetComponent<AudioSource> ();
+
+		//Elements of the progress bar
+		pBarAnimator = progressBar.GetComponent<Animator>();
+
+		//about the mechanic
+		stars = 0;
 	}
 
-	void FixedUpdate () {
-		if (isSinging) {
-			animator.CrossFade ("sing", 0f); //change the animation immediately
-		} else if (isWalking) {
-			animator.CrossFade ("walking", 0f);
-			tPlayer.Translate(2f * Time.deltaTime,  0.0f, 0.0f );
-		} else {
-			animator.CrossFade ("idle", 0f);
-		}
-	}
-		
+
 	void Update () {
+		//Make player sing
 		if(Input.GetMouseButtonDown(0)) {
-
 			Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-			if (objCollider.OverlapPoint (mousePosition) && !isSinging && !isWalking && count < 5) {
-				//save the time of the click
-				if (getTime) {
-					time = Time.frameCount;
-					getTime = false;
-				}
-
+			if (playerCollider.OverlapPoint (mousePosition)) {
 				//make sing: change animation, play note
-				isSinging = true;
-				//audioSource.Play ();
-
-			} else if (count > 5) {
-				isSinging = true;
-				audioSource.Play ();
+				playerAnimator.SetTrigger("sing");
+				stars++;
+				StartCoroutine ("sing");
 			}
 		}
 
-		//make the player walk after a time
-		if (isSinging && !isWalking && Time.frameCount > time + 50 && count<5) {
-				isSinging = false;
-				isWalking = true;
-				time = Time.frameCount;
+		//end the level
+		if (stars >= 5 ){
+			StartCoroutine("theEnd");
 		}
-
-		//make the player stop walk after a time
-		if (isWalking && Time.frameCount > time + 40 && count<5) {
-			isWalking = false;
-			getTime = true;
-
-			//increments the count (max: 5)
-			count++;
-		}
-			
+	}
+		
+	//victory screen
+	IEnumerator theEnd () {
+		yield return new WaitForSeconds (2f);
+		victory.SetActive (true);
 	}
 
-	void restart(){
-		isWalking = false;
-		isSinging = false;
-		getTime = true;
-		time = 0;
-		count = 0;
+	IEnumerator sing(){
+		yield return new WaitForSeconds(1f);
+		pBarAnimator.SetInteger("cont",stars);
+		playerAudioSource.Play ();
+		StartCoroutine("stoSing");
+	}
+
+	IEnumerator stopSing(){
+		yield return new WaitForSeconds (secToSing);
+		playerAnimator.SetTrigger("idle");
 	}
 }

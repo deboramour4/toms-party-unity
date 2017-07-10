@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ManagerScript2 : MonoBehaviour {
+public class ManagerScript2OLD : MonoBehaviour {
 
 	public GameObject progressBar;
 

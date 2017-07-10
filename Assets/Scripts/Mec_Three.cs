@@ -112,37 +112,42 @@ public class Mec_Three : MonoBehaviour {
 
 	//the second click. checks if it's the correct "par"
 	IEnumerator turnSecond(){
-		//play the note of the wood
-		yield return new WaitForSeconds (0.4f);
-		woodAudioSource [actualWood].Play ();
-
-		if (woodAudioSource [lastWood].clip == woodAudioSource [actualWood].clip) {
-			//if it's correct, mi happy, plus star, and stay normal
-			playerAnimator.SetTrigger("happy");
-			StartCoroutine ("stopHappy");
-			totalCorrect++;
-			woodAnimator [actualWood].SetTrigger ("turned");
-			woodAnimator [lastWood].SetTrigger ("turned");
-			firstClick = true;
-
-			if (totalCorrect == 2 && stars!=5) {
-				stars++;
-				pBarAnimator.SetInteger("cont", stars);
-				totalCorrect = 0;
-				StartCoroutine("newRound");
-			}
-			if (stars == 5) {
-				StartCoroutine("theEnd");
-			}
-				
+		if (lastWood == actualWood) {
+			yield return new WaitForSeconds (0.4f);
+			woodAudioSource [actualWood].Play ();
 		} else {
-			//if it's wrong turn back the woods
-			playerAnimator.SetTrigger("sad");
-			StartCoroutine ("stopSad");
-			yield return new WaitForSeconds (2f);
-			woodAnimator [actualWood].SetTrigger ("hide");
-			woodAnimator [lastWood].SetTrigger ("hide");
-			firstClick = true;
+			//play the note of the wood
+			yield return new WaitForSeconds (0.4f);
+			woodAudioSource [actualWood].Play ();
+
+			if (woodAudioSource [lastWood].clip == woodAudioSource [actualWood].clip) {
+				//if it's correct, mi happy, plus star, and stay normal
+				playerAnimator.SetTrigger ("happy");
+				StartCoroutine ("stopHappy");
+				totalCorrect++;
+				woodAnimator [actualWood].SetTrigger ("turned");
+				woodAnimator [lastWood].SetTrigger ("turned");
+				firstClick = true;
+
+				if (totalCorrect == 2 && stars != 5) {
+					stars++;
+					pBarAnimator.SetInteger ("cont", stars);
+					totalCorrect = 0;
+					StartCoroutine ("newRound");
+				}
+				if (stars == 5) {
+					StartCoroutine ("theEnd");
+				}
+				
+			} else {
+				//if it's wrong turn back the woods
+				playerAnimator.SetTrigger ("sad");
+				StartCoroutine ("stopSad");
+				yield return new WaitForSeconds (2f);
+				woodAnimator [actualWood].SetTrigger ("hide");
+				woodAnimator [lastWood].SetTrigger ("hide");
+				firstClick = true;
+			}
 		}
 	}
 

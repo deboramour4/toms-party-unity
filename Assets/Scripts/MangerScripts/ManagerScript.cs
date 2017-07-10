@@ -7,6 +7,7 @@ public class ManagerScript : MonoBehaviour {
 	//External game objects
 	public GameObject objPlayer; 
 	public GameObject progressBar;
+	public GameObject popUpVictory;
 
 	public GameObject[] objBugles = new GameObject[3];
 	private PlayingNote[] bugles = new PlayingNote[3];
@@ -59,6 +60,10 @@ public class ManagerScript : MonoBehaviour {
 			Debug.Log ("ACERTÔ MISERAVI");
 			isCorrect = false;
 		} 
+
+		if (cont >= 5) {
+			popUpVictory.SetActive (true);
+		}
 
 		animProgress.SetInteger ("cont", cont);
 		//Debug.Log (bugles[0].getCorrect()+" "+bugles[1].getCorrect()+" "+bugles[2].getCorrect());
