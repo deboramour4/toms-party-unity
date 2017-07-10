@@ -34,6 +34,16 @@ public class Drag : MonoBehaviour {
 		isDragging = false;
 	}
 
+	void Update(){
+		if(gameObject.activeInHierarchy == false){
+			gameObject.SetActive (true);
+			temp.x = initPosX;
+			temp.y = initPosY;
+			transform.position = temp;
+			isDragging = true;
+		}
+	}
+
 	//While is dragging
 	void OnMouseDown(){
 		dist = Camera.main.WorldToScreenPoint (transform.position);

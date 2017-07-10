@@ -18,10 +18,12 @@ public class Drop : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		Debug.Log ("aeeee");
 		if(other.gameObject.tag == "PhotoDo"){
+			other.gameObject.SetActive (false);
 			portraitDo.SetActive (true);
 			spriteDo.sortingOrder = 1;
 			spriteRe.sortingOrder = 0;
 		} else if(other.gameObject.tag == "PhotoRe"){
+			other.gameObject.SetActive (false);
 			portraitRe.SetActive (true);
 			spriteDo.sortingOrder = 0;
 			spriteRe.sortingOrder = 1;

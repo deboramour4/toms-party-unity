@@ -2,6 +2,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Mec_Zero.cs">
     <Files>
+<<<<<<< HEAD
       <File FileName="Assets\Scripts\Mec_Three.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Wood.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Victory.cs" Line="12" Column="27" />
@@ -9,6 +10,14 @@
       <File FileName="Assets\Scripts\MangerScripts\ManagerScript.cs" Line="65" Column="16" />
       <File FileName="Assets\Scripts\PlayingNote.cs" Line="48" Column="1" />
       <File FileName="Assets\Scripts\Mec_Zero.cs" Line="50" Column="13" />
+=======
+      <File FileName="Assets\Scripts\Drop.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Drag.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayingNote2.cs" Line="47" Column="3" />
+      <File FileName="Assets\Scripts\PlayingNote.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\MangerScripts\ManagerScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\MangerScripts\ManagerScript2.cs" Line="27" Column="4" />
+>>>>>>> 2dda908775d8f52b12a5fb8e059fe060a5ca99a7
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
